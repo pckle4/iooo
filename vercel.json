@@ -1,25 +1,26 @@
 {
+  "version": 2,
   "builds": [
     {
-      "src": "client/**/*",
+      "src": "package.json", // Use root package.json for frontend build
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "client/dist"
+        "distDir": "dist/public" // Matches vite.config.ts outDir
       }
     },
     {
-      "src": "server/index.ts",
+      "src": "server/dist/index.js", // Pre-built backend file
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "server/index.ts"
+      "dest": "server/dist/index.js" // API routes to backend
     },
     {
       "src": "/(.*)",
-      "dest": "client/index.html"
+      "dest": "dist/public/index.html" // All other routes to frontend
     }
   ]
 }
